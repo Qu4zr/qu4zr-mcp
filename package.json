@@ -1,0 +1,53 @@
+{
+  "name": "qu4zr-mcp",
+  "version": "0.52.1",
+  "description": "MCP server for building qu4zr workspaces from your AI assistant (Claude Code, Copilot, Cursor, Codex, Kiro, …).",
+  "author": "qu4zr <contact@qu4zr.com>",
+  "homepage": "https://qu4zr.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qu4zr/qu4zr-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Qu4zr/qu4zr-mcp/issues",
+    "email": "contact@qu4zr.com"
+  },
+  "type": "module",
+  "bin": {
+    "qu4zr-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "SECURITY.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "smoke": "node dist/smoke.js",
+    "dev": "tsc --watch",
+    "test": "tsc -p tsconfig.test.json && node --test \"dist-test/**/*.test.js\""
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "qu4zr",
+    "workflow",
+    "ai"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "acorn": "^8.18.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}
