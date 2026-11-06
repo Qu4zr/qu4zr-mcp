@@ -207,6 +207,8 @@ starts processes (`dotnet`, and the service installer behind a UAC/sudo prompt) 
 | `edit_file` | flows:write | change **part** of an existing file (`oldString` → `newString`), leaving every other byte alone — the default for editing anything that already exists |
 | `write_file` / `delete_file` | flows:write | **create** a code file or replace one outright (delete: `confirm: true`). Writing an HTML **page** also reports what it still needs to be findable (see [Sites](#sites-pages-not-just-apis)) |
 | `audit_seo` | flows:read | read HTML pages for what makes them findable — nothing written; send the whole site + `baseUrl` for the cross-page checks |
+| `get_site_visitors` | flows:read | real visitors of the caller's own sites per day (crawlers and cloud servers left out), returning, sources, bot share; all sites at once or one; up to 400 days |
+| `get_site_traffic` | flows:read | one site's requests summed over up to 30 days: crawlers by name, busiest endpoints and paths with bot share, statuses, cache hits |
 | `get_app_analytics` | flows:read | aggregates of the events an app records with `analytics.track` — totals, distinct actors, daily counts, thresholds, breakdowns, D1/D7/D30 retention; never who |
 | `set_app_listing` | flows:deploy | ask for a site to be listed at qu4zr.com/apps (pending until an operator approves; edits go back for review), read the listing, or withdraw it |
 | `infer_zones` | flows:write | group an EXISTING workspace's blocks into labelled canvas areas and lay them out (**`confirm: true`**). For something you are building, send `zones` with the content instead |

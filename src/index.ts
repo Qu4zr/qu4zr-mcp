@@ -1756,6 +1756,54 @@ server.registerTool(
 );
 
 server.registerTool(
+  "get_site_visitors",
+  {
+    title: "Read a site's real visitors",
+    description:
+      "Real people on the caller's own hosted sites, per day — the platform's visitor count, with crawlers, " +
+      "cloud servers and the operator left out (a visitor is a browser that ran one of the site's scripts). " +
+      "For each day: visitors, returning visitors (seen in the 30 days before), where they came from " +
+      "(google, search, social, ai assistants, qu4zr sites, other links, direct), and every request vs. bot " +
+      "requests. Also the totals for the window and for the same-length window just before it. " +
+      "Without domainId: every site of the caller, busiest first, totals and a per-day trend — the place to " +
+      "start a traffic report. With domainId: that site day by day. Works whether or not the app records " +
+      "analytics.track events. Counted per site and per day (one person on three days = three); refreshed " +
+      "every few hours, so today is marked partial. Days default 30, up to 400.",
+    inputSchema: {
+      domainId: z.number().int().optional().describe("One site (from list_domains). Omit for all of the caller's sites."),
+      days: z.number().int().min(1).max(400).optional().describe("Window in days, ending today (default 30)."),
+    },
+    annotations: { readOnlyHint: true },
+  },
+  async ({ domainId, days }) =>
+    run(() =>
+      client.request("GET", `${domainId == null ? "/api/v1" : `/api/v1/domains/${domainId}`}/visitors${qs({ days })}`),
+    ),
+);
+
+server.registerTool(
+  "get_site_traffic",
+  {
+    title: "Read what is hitting a site",
+    description:
+      "Every request to one of the caller's sites over the last days, summed from the platform's request " +
+      "journal: per day requests, bot requests, 4xx and 5xx; the crawlers by name (Googlebot, Amazonbot, " +
+      "GPTBot, SemrushBot, scripts…) with their request counts; the busiest endpoints (offre/{slug}) and the " +
+      "busiest exact paths, each with its bot share and errors; status codes; cache hits and average duration. " +
+      "Use it to see which robots cost the most, which pages they crawl, and whether a block (robots.txt, " +
+      "a 403 by user agent) took effect. Bots = flagged when recorded, no browser user agent, or one naming a " +
+      "crawler or a tool. Aggregates only: no address, account or full user agent. Days default 7, up to 30.",
+    inputSchema: {
+      domainId: z.number().int().describe("The site (from list_domains)."),
+      days: z.number().int().min(1).max(30).optional().describe("Window in days, ending now (default 7)."),
+    },
+    annotations: { readOnlyHint: true },
+  },
+  async ({ domainId, days }) =>
+    run(() => client.request("GET", `/api/v1/domains/${domainId}/traffic${qs({ days })}`)),
+);
+
+server.registerTool(
   "set_app_listing",
   {
     title: "List a site in the public app directory",

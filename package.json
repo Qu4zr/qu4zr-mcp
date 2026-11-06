@@ -1,6 +1,6 @@
 {
   "name": "qu4zr-mcp",
-  "version": "0.52.1",
+  "version": "0.53.0",
   "description": "MCP server for building qu4zr workspaces from your AI assistant (Claude Code, Copilot, Cursor, Codex, Kiro, …).",
   "author": "qu4zr <contact@qu4zr.com>",
   "homepage": "https://qu4zr.com",
